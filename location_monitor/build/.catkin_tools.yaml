@@ -1,0 +1,6 @@
+devel_space: /home/farzaneh/Documents/catkin_ws_melodic/src/location_monitor/devel
+install: false
+install_space: /home/farzaneh/Documents/catkin_ws_melodic/src/location_monitor/install
+profile: default
+source_space: /home/farzaneh/Documents/catkin_ws_melodic/src/location_monitor/src
+workspace: /home/farzaneh/Documents/catkin_ws_melodic/src/location_monitor

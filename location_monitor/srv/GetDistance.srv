@@ -1,0 +1,3 @@
+string name # The name of the query landmark
+---
+float64 distance # The distance to the query landmark
