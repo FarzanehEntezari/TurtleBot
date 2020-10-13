@@ -64,6 +64,7 @@ find_package(catkin REQUIRED COMPONENTS rospy message_generation actionlib_msgs)
 # Generate added messages and services with any dependencies listed here
  generate_messages(
    DEPENDENCIES
+   actionlib_msgs
    #std_msgs  # Or other packages containing msgs
  )
 
