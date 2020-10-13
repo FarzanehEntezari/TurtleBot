@@ -7,7 +7,7 @@ project(location_monitor)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS rospy message_generation)
+find_package(catkin REQUIRED COMPONENTS rospy message_generation actionlib_msgs)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -56,13 +56,12 @@ find_package(catkin REQUIRED COMPONENTS rospy message_generation)
  )
 
 ## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
-#   Action2.action
-# )
+ add_action_files(
+   FILES
+   timer.action
+ )
 
-## Generate added messages and services with any dependencies listed here
+# Generate added messages and services with any dependencies listed here
  generate_messages(
    DEPENDENCIES
    #std_msgs  # Or other packages containing msgs
@@ -103,6 +102,7 @@ catkin_package(
   CATKIN_DEPENDS 
     rospy
     message_runtime
+    actionlib_msgs
 #  DEPENDS system_lib
 )
 
