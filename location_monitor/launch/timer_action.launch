@@ -1,0 +1,5 @@
+<launch>
+  <node name="server" pkg="location_monitor" type="timer_action_server.py" output="screen" />
+  <node name="client" pkg="location_monitor" type="timer_action_client.py" output="screen" />
+  
+</launch>
