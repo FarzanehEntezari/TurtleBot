@@ -2,26 +2,33 @@
 
 
 import rospy
-import time
+import pickle
+import numpy as np
 from sensor_msgs.msg import Imu
 from sklearn.neighbors import KernelDensity
 
-class Gaussian_Estimation():
+class Probabality_Estimate():
     def __init__ (self):
-        self.kde = KernelDensity(kernel='gaussian' , bandwidth = 0.2)
+         with open( "GaussianKernel_NormalMode.pickle" , 'rb' ) as file :
+             self.kde = pickle.load(file)
 
     def callback(self , msg):
-        rospy.loginfo("Got the message!")
+        #rospy.loginfo("Got the message!")
         #rospy.loginfo(msg.linear_acceleration.x)
-        self.kde.partial_fit(msg.linear_acceleration.x)
-        if time.time % 30 == 0 :
-            print(self.kde.get_params(deep=False) )
+        #self.kde.partial_fit(msg.linear_acceleration.x)
+        #if time.time % 30 == 0 :
+        #    print(self.kde.get_params(deep=False) )
+        acc_x = msg.linear_acceleration.x
+        acc_z = msg.linear_acceleration.z
+        acc = np.array( [acc_x , acc_z]  ).reshape(1,2)
+        logprob = self.kde.score_samples(acc )
+        rospy.loginfo( "p of normal: %f" %( np.exp(logprob) ))
 
 
 def main():
     rospy.init_node('fault_detection', anonymous = True)
-    GK = Gaussian_Estimation()
-    rospy.Subscriber('imu' , Imu , GK.callback)
+    PE = Probabality_Estimate()
+    rospy.Subscriber('imu' , Imu , PE.callback)
     rospy.spin()
 
 if  __name__ =="__main__" :
