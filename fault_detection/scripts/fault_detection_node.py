@@ -13,17 +13,11 @@ class Probabality_Estimate():
              self.kde = pickle.load(file)
 
     def callback(self , msg):
-        #rospy.loginfo("Got the message!")
-        #rospy.loginfo(msg.linear_acceleration.x)
-        #self.kde.partial_fit(msg.linear_acceleration.x)
-        #if time.time % 30 == 0 :
-        #    print(self.kde.get_params(deep=False) )
         acc_x = msg.linear_acceleration.x
         acc_z = msg.linear_acceleration.z
         acc = np.array( [acc_x , acc_z]  ).reshape(1,2)
-        logprob = self.kde.score_samples(acc )
+        logprob = self.kde.score_samples(acc)
         rospy.loginfo( "p of normal: %f" %( np.exp(logprob) ))
-
 
 def main():
     rospy.init_node('fault_detection', anonymous = True)
