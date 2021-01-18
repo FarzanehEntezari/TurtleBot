@@ -43,7 +43,8 @@ class fault_injection():
             twist.angular.z =  random.uniform(self.vel_ang_min,self.vel_ang_max)
             self.pub.publish(twist)
             self.pub_f.publish(cmdvel_fault)
-            #print("published!")
+            print("published!")
+    
     def set_margin(self):
         BURGER_MAX_LIN_VEL = 0.22
         BURGER_MAX_ANG_VEL = 2.84
@@ -53,21 +54,21 @@ class fault_injection():
         ANG_VEL_STEP_SIZE = 0.1
 
         if(self.turtlebot3_model == "burger"):
-            self.vel_lin_max = BURGER_MAX_LIN_VEL
+            self.vel_lin_max =   BURGER_MAX_LIN_VEL
             self.vel_lin_min = - BURGER_MAX_LIN_VEL
-            self.vel_ang_max =  BURGER_MAX_ANG_VEL
+            self.vel_ang_max =   BURGER_MAX_ANG_VEL
             self.vel_ang_min = - BURGER_MAX_ANG_VEL
         elif(self.turtlebot3_model == "waffle" | turtlebot3_model == "waffle_pi"):
-            self.vel_lin_max = WAFFLE_MAX_LIN_VEL
+            self.vel_lin_max =   WAFFLE_MAX_LIN_VEL
             self.vel_lin_min = - WAFFLE_MAX_LIN_VEL
-            self.vel_ang_max =  WAFFLE_MAX_ANG_VEL
+            self.vel_ang_max =   WAFFLE_MAX_ANG_VEL
             self.vel_ang_min = - WAFFLE_MAX_ANG_VEL
 
 
 def main():
     rospy.init_node("fault_injection" , anonymous=True)
     pub = rospy.Publisher( "/cmd_vel" , Twist , queue_size =1 , latch=False )
-    pub_f = rospy.Publisher( "/fault_mode" , Fault , queue_size =1 , latch=False )
+    pub_f = rospy.Publisher( "/fault_mode" , Fault , queue_size =10 , latch=False )
     turtlebot3_model = rospy.get_param("model", "burger")
     fi= fault_injection(pub ,pub_f ,  turtlebot3_model)
     fi.set_margin()
